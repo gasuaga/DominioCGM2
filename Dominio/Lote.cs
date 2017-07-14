@@ -7,6 +7,16 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
+    /**
+     * @class   Lote
+     *
+     * @brief   Es la clase que se encarga de los
+     *          lotes que se van a subir a inconsert 
+     *
+     * @author  WINMACROS
+     * @date    14/07/2017
+     */
+
     class Lote : IEquatable<Lote>, IComparable<Lote>
     {
         #region Variables
