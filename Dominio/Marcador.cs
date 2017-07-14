@@ -492,7 +492,7 @@ namespace Dominio
          *
          * @param   pNumeros    Los numeros donde tiene que buscar.
          *
-         * @return  An int.
+         * @return  El numero mayor de los pNumeros.
          */
 
         public int numeroMayor(int[] pNumeros)
