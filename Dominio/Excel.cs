@@ -4,9 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Web;
 namespace Dominio
 {
+    /**
+     * @class   Excel
+     *
+     * @brief   Se encarga de todas las acciones sobre un archivo Excel
+     *
+     * @author  WINMACROS
+     * @date    14/07/2017
+     */
+
     class Excel
     {
         #region propertys

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Excel.cs" />
+    <Compile Include="Lote.cs" />
     <Compile Include="LoteMarcador.cs" />
     <Compile Include="Marcador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
