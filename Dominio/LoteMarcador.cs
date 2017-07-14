@@ -24,13 +24,13 @@ namespace Dominio
         #endregion
 
         #region constructores
-        public loteMarcador(Lote pLote, DateTime pDesde, DateTime pHasta)
+        public LoteMarcador(Lote pLote, DateTime pDesde, DateTime pHasta)
         {
             Lot = pLote;
             Desde = pDesde;
             Hasta = pHasta;
         }
-        public loteMarcador(Lote pLote)
+        public LoteMarcador(Lote pLote)
         {
             Lot = pLote;
         }
