@@ -71,5 +71,23 @@ namespace Dominio
         }
         #endregion
 
+        #region  overrides
+        public override string ToString()
+        {
+            return @Direccion + @Nombre + Extencion;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            URL u = obj as URL;
+            if (u == null) return false;
+            return u.ToString().Equals(this.ToString());
+        }
+
+        public bool Equals(URL other)
+        {
+            return other.ToString().Equals(this.ToString());
+        }
+        #endregion
     }
 }
