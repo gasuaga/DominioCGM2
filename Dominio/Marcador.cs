@@ -51,7 +51,7 @@ namespace Dominio
          *
          * @return  The historial lotes.
          */
-        public List<loteMarcador> HistorialLotes { get; set; }
+        public List<LoteMarcador> HistorialLotes { get; set; }
         /**
          * @property    public List<loteMarcador> LotesActivos
          *
@@ -60,7 +60,7 @@ namespace Dominio
          *
          * @return  The lotes activos.
          */
-        public List<loteMarcador> LotesActivos { get; set; }
+        public List<LoteMarcador> LotesActivos { get; set; }
         /**
          * @property    public List<loteMarcador> LotesParaCargar
          *
@@ -69,7 +69,7 @@ namespace Dominio
          *
          * @return  The lotes para cargar.
          */
-        public List<loteMarcador> LotesParaCargar { get; set; }
+        public List<LoteMarcador> LotesParaCargar { get; set; }
         /**
          * @property    private List<string> LotesParaSacarReporte
          *
@@ -505,5 +505,137 @@ namespace Dominio
             }
             return mayor;
         }
+
+        
+        /**
+         * @fn  private void detenerMotor(string pEstado, int pos)
+         *
+         * @brief   Detiene el motor en inconsert
+         *
+         * @author  WINMACROS
+         * @date    17/07/2017
+         *
+         * @param   pEstado Estado actual del motor.
+         * @param   pos     Pos del motor en la tabla.
+         */
+
+        private void detenerMotor(string pEstado, int pos)
+        {
+            baseDatos bd = baseDatos.Bd;
+            Sistema s = Sistema.Sis;
+            if (pEstado == "RUNNING")//si el estado acutal del motor es en andando se lo frena
+            {
+                s.ejecutarMacro(s.m_app, "TAG POS=" + pos + " TYPE=td ATTR=IDX:9", "Detener el motor si esta en running", false);
+                irAlMortor();
+            }
+            Estado = estadoMotor.denenido;
+            bd.cambiarEstadoMotor(this);
+        }
+
+        /**
+         * @fn  public void cargarLotesAlMarcador()
+         *
+         * @brief   Crea los lotes dentro del motor.
+         *
+         * @author  WINMACROS
+         * @date    17/07/2017
+         */
+
+        public void cargarLotesAlMarcador()
+        {
+            Sistema s = Sistema.Sis;
+            baseDatos bd = baseDatos.Bd;
+            int pos = irAlMotorYDetener();
+            entrarAlMotor(pos);
+            LotesParaCargar.Sort();
+            foreach (LoteMarcador lM in LotesParaCargar)
+            {
+                lM.cargarVariables();
+                s.ejecutarMacro(s.m_app, s.direccion + "Cargar lote/CargarLoteAMotor.iim", "Cargar el lote: " + lM.Lot.Nombre + " Al motor", true);
+                esperarQueElMotorCarge();
+                lM.cargarVariables();
+                s.ejecutarMacro(s.m_app, s.direccion + "Cargar lote/CrearLoteDentroMotor.iim", "Crear un nuevo lote dentro del motor", true);
+                esperarQueElMotorCarge();
+                s.ejecutarMacro(s.m_app, "TAG POS=1 TYPE=BUTTON:BUTTON ATTR=ID:btnSave CONTENT=Guardar", "Guardar cambios en el motor", false);
+                esperarQueElMotorCarge();
+                lM.Lot.Estado = Lote.tipoEstado.Activo;
+                LotesActivos.Add(lM);
+                bd.cambiarEstadoLote(lM.Lot);
+                s.accionesCodigo("Cargar el lote: " + lM.Lot.Nombre + " En el motor", "Completo");
+                bd.agregarLoteEnMarcador(lM);
+            }
+            LotesParaCargar = LotesParaCargar.Where(l => !LotesActivos.Contains(l)).ToList();
+            darlePLayMotor();
+        }
+
+        /**
+         * @fn  public void darlePLayMotor()
+         *
+         * @brief   Da play al motor.
+         *
+         * @author  WINMACROS
+         * @date    17/07/2017
+         */
+
+        public void darlePLayMotor()
+        {
+            Sistema s = Sistema.Sis;
+            baseDatos bd = baseDatos.Bd;
+            s.ejecutarMacro(s.m_app, "Datos", Nombre);
+            s.ejecutarMacro(s.m_app, s.direccion + "Cargar lote/PlayLote.iim", "Darle play al motor", true);
+            Estado = estadoMotor.activo;
+            bd.cambiarEstadoMotor(this);
+        }
+
+        /**
+         * @fn  public static void cargarLoteAMotor()
+         *
+         * @brief   Carga los lotes que hay en sistema
+         *          y los que son del motor se los asigna
+         *          a la lista loter para cargar.
+         *
+         * @author  WINMACROS
+         * @date    17/07/2017
+         */
+
+        public static void cargarLoteAMotor()
+        {
+            Sistema s = Sistema.Sis;
+            tolls t = tolls.T;
+            s.accionesCodigo("Carga de lotes a los motores");
+            List<Lote> lot = t.lotesPara(Lote.tipoEstado.ParaCargar);
+            DateTime loteDesde = DateTime.Today;
+            foreach (Marcador m in t.campanasDistintaslotes(lot))
+            {
+                s.accionesCodigo("Para la campaña: " + m.Nombre + " Estan los lotes: ");
+                m.LotesParaCargar = new List<LoteMarcador>();//cuidadod aca reseteo lista cada ves que cargo nuevos lotes por si las deudas
+                foreach (Lote l in lot)
+                {
+                    if (l.Marc.Equals(m))
+                    {
+                        s.accionesCodigo(l.ToString());
+                        LoteMarcador lotMarc = new LoteMarcador(l, loteDesde, LoteMarcador.fechaHastaLote(loteDesde, l));
+                        m.LotesParaCargar.Add(lotMarc);
+                    }
+                }
+            }
+        }
+        
+
+        #region overides
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            Marcador marc = (Marcador)obj;
+            if (marc == null)
+                return false;
+            return this.Nombre.Equals(marc.Nombre);
+        }
+        public override int GetHashCode()
+        {
+            return Nombre.GetHashCode();
+        }
+        #endregion
     }
 }

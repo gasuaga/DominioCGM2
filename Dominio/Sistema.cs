@@ -213,13 +213,13 @@ namespace Dominio
 
             List<Lote> lotesParaEliminar = t.lotesPara(Lote.tipoEstado.paraEliminar);
             foreach (Lote l in lotesParaEliminar)
-                eliminarImportacion(l, 0);
+                l.eliminarImportacion(0);
 
             m_app.iimClose();
 
             iniciarYLogear(Sistema.navegadores.silent.ToString());
             foreach (Lote l in pLotesParaCargar)
-                crearNuevaImportacion(l);
+                l.crearNuevaImportacion();
 
             m_app.iimClose();
 
