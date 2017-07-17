@@ -18,7 +18,7 @@ namespace Dominio
      * @author  WINMACROS
      * @date    14/07/2017
      */
-    class Frecuencia
+    public class Frecuencia
     {
         #region property
         /**

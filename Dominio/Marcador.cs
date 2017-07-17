@@ -17,7 +17,7 @@ namespace Dominio
      * @date    13/07/2017
      */
 
-    class Marcador
+    public class Marcador
     {
         #region Variables
         /**
@@ -87,17 +87,17 @@ namespace Dominio
         {
             Nombre = pNombre;
             Tipo = pTipo;
-            HistorialLotes = new List<loteMarcador>();
-            LotesActivos = new List<loteMarcador>();
-            LotesParaCargar = new List<loteMarcador>();
+            HistorialLotes = new List<LoteMarcador>();
+            LotesActivos = new List<LoteMarcador>();
+            LotesParaCargar = new List<LoteMarcador>();
             LotesParaSacarReporte = new List<string>();
         }
         public Marcador(string pNombre)
         {
             Nombre = pNombre;
-            HistorialLotes = new List<loteMarcador>();
-            LotesActivos = new List<loteMarcador>();
-            LotesParaCargar = new List<loteMarcador>();
+            HistorialLotes = new List<LoteMarcador>();
+            LotesActivos = new List<LoteMarcador>();
+            LotesParaCargar = new List<LoteMarcador>();
             LotesParaSacarReporte = new List<string>();
         }
         #endregion
@@ -348,7 +348,7 @@ namespace Dominio
             int cont = 0;
             while (!bandera && this.LotesActivos.Count > cont)
             {
-                loteMarcador lActual = LotesActivos[cont];
+                LoteMarcador lActual = LotesActivos[cont];
                 if (pNombre == lActual.Lot.Nombre)
                 {
                     baseDatos bd = baseDatos.Bd;

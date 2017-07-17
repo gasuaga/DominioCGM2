@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Automatizaciones.cs" />
     <Compile Include="Excel.cs" />
     <Compile Include="Frecuencia.cs" />
     <Compile Include="Lote.cs" />

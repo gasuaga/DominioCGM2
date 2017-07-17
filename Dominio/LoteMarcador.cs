@@ -15,7 +15,7 @@ namespace Dominio
      * @date    14/07/2017
      */
 
-    class LoteMarcador : IComparable<LoteMarcador>
+    public class LoteMarcador : IComparable<LoteMarcador>
     {
         #region propertys
         public Lote Lot { get; set; }

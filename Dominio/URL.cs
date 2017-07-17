@@ -18,7 +18,7 @@ namespace Dominio
      * @date    14/07/2017
      */
 
-    class URL
+    public class URL
     {
         #region propery
         public string Direccion { get; set; }

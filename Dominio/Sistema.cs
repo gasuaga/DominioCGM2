@@ -21,7 +21,7 @@ namespace Dominio
      * @date    17/07/2017
      */
 
-    class Sistema
+    public class Sistema
     {
         #region variables
         /** @brief   Instancia estatica y unica del sistema */

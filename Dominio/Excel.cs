@@ -16,7 +16,7 @@ namespace Dominio
      * @date    14/07/2017
      */
 
-    class Excel
+    public class Excel
     {
         #region propertys
         public URL Direccion { get; set; }

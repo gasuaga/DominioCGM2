@@ -17,7 +17,7 @@ namespace Dominio
      * @date    14/07/2017
      */
 
-    class Lote : IEquatable<Lote>, IComparable<Lote>
+    public class Lote : IEquatable<Lote>, IComparable<Lote>
     {
         #region Variables
         /**
@@ -63,7 +63,7 @@ namespace Dominio
             LoteTipo = pTipo;
             Exc = pExc;
             EliminarLotesAnt = pEliminar;
-            Frec = Frecuencia.frecuenciaXid(pFrecuencia);
+            Frec = new Frecuencia(pFrecuencia);
         }
         public Lote(string pNombre, DateTime pCreacion, tipoEstado pEstado, tipoLote pTipo, bool pEliminar)
         {
@@ -72,12 +72,12 @@ namespace Dominio
             Estado = pEstado;
             LoteTipo = pTipo;
             EliminarLotesAnt = pEliminar;
-            Frec = Frecuencia.frecuenciaXid(10);
+            Frec = new Frecuencia(1);
         }
         public Lote(string pNombre)
         {
             Nombre = pNombre;
-            Frec = Frecuencia.frecuenciaXid(10);
+            Frec = new Frecuencia(1);
         }
         #endregion
 
