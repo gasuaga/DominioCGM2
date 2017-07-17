@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Automatizaciones.cs" />
+    <Compile Include="BaseDatos.cs" />
     <Compile Include="Excel.cs" />
     <Compile Include="Frecuencia.cs" />
     <Compile Include="Lote.cs" />
@@ -95,6 +96,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BaseDeDatos\BaseDeDatos.csproj">
+      <Project>{8655be52-2a93-4c67-abc4-9ab1fe27be2a}</Project>
+      <Name>BaseDeDatos</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

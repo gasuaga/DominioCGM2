@@ -400,6 +400,17 @@ namespace Dominio
             }
             catch (Exception) { }
         }
+        public void accionoBaseDatos(string pAccion)
+        {
+            try
+            {
+                StreamWriter sW = new StreamWriter(@"E:\Logs\Bd\" + DateTime.Today.ToString("yyyyMMdd") + ".txt", true);
+                sW.WriteLine(DateTime.Now.ToLongTimeString() + " - " + pAccion + " Que dio como resultado: " + pResultado);
+                sW.Close();
+                sW.Dispose();
+            }
+            catch (Exception) { }
+        }
 
         public void accionesCodigo(string pAccion, string pResultado)
         {
